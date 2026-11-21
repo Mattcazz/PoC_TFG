@@ -10,7 +10,7 @@ from langfuse.openai import OpenAI
 
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
-MODEL = "qwen3:4b"
+MODEL = os.getenv('MODEL')
 
 SYSTEM_PROMPT = (
     "You are a dialog writer. You are going to receive two characters and a story. "
