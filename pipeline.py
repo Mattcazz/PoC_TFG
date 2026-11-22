@@ -38,7 +38,13 @@ def parse_args():
     parser.add_argument(
         "--run-id", default=None, help="Defaults to a random UUID."
     )
+    parser.add_argument(
+        "-n", "--runs", type=int, default=1,
+        help="Number of runs to execute in a row. With --run-id and n > 1, run ids are <run-id>-1 ... <run-id>-n.",
+    )
     args = parser.parse_args()
+    if args.runs < 1:
+        parser.error("-n must be at least 1")
 
     live = list(STAGES) if args.live == "all" else [s.strip() for s in args.live.split(",")]
     unknown = [s for s in live if s not in STAGES]
@@ -48,9 +54,7 @@ def parse_args():
     return args
 
 
-def main():
-    args = parse_args()
-    run_id = args.run_id or str(uuid.uuid4())
+def run(args, run_id):
     out_dir = ROOT / "output" / run_id
     if out_dir.exists():
         raise SystemExit(f"Run folder already exists: {out_dir}")
@@ -79,6 +83,18 @@ def main():
     _ = get("dialog", world=world, characters=characters, conflict=conflict)
 
     print(f"\nRun {run_id} saved in {out_dir} (user: {os.getenv('USERNAME')})\n")
+
+
+def main():
+    args = parse_args()
+    for i in range(1, args.runs + 1):
+        if args.run_id:
+            run_id = f"{args.run_id}-{i}" if args.runs > 1 else args.run_id
+        else:
+            run_id = str(uuid.uuid4())
+        if args.runs > 1:
+            print(f"=== run {i}/{args.runs} ===", flush=True)
+        run(args, run_id)
 
 
 if __name__ == "__main__":
