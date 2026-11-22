@@ -20,6 +20,7 @@ Rules:
 - The dialog must make the conflict and the relationships between the characters visible, but do NOT resolve it.
 - "text" contains only the spoken words: no speaker name, no quotation marks, no stage directions.
 - Write between 6 and 12 turns.
+- Don't always return the same amount of characters. It's ok to have a short response if it makes sense.
 
 Return a JSON object with this structure:
 {{
