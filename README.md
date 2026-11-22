@@ -88,6 +88,7 @@ Scoring is **not** part of `pipeline.py`: run it by hand after a run, once its t
 
 ```bash
 python -m scoring.score <run-id>                      # score one run
+python -m scoring.score --all                         # every run in output/ (one score set per run per live stage)
 python -m scoring.score <run-id-1> <run-id-2>         # several runs; also computes O7 (novelty) across them
 python -m scoring.score <run-id> --live dialog        # runs without run.json: say which stages were live
 python -m scoring.score <run-id> --no-embeddings      # skip O6/O7, no embedding model needed
@@ -98,5 +99,6 @@ python -m scoring.score <run-id> --dry-run            # print the scores, send n
 - It reads `output/<run-id>/`, computes the metrics in [`scoring/checks.py`](scoring/checks.py) and attaches them as scores to the Langfuse trace of each stage (found through the `run_id` metadata). Look for them in the trace's **Scores** tab; they can take up to ~30 seconds to appear.
 - Re-running is safe: the score id is `trace id + score name`, so scores are overwritten, not duplicated.
 - Without `--no-embeddings`, `O6`/`O7` need `nomic-embed-text` in Ollama. If it is missing the script fails **before** sending anything, so nothing shows up in Langfuse.
-- `O7` compares the same stage across runs, so pass runs made from the same input with different seeds.
+- `O7` (novelty) compares the **output of a stage** across runs: it embeds each run's stage JSON and averages the pairwise cosine similarity (lower = more varied). It works for any number of runs (k runs = k·(k−1)/2 pairs) and the same value is written on every run of the group. The `idea` is **not** compared; it only decides the group: runs are compared only if they have the same `idea` (from `run.json`), so `--all` never mixes different inputs. Runs without `run.json` are skipped by `--all` unless you pass `--live`.
+  - Caveat: the group is defined by `idea` only. If a stage depends on earlier *live* stages (e.g. `characters` after a live `world`), each run gets a different input, so `O7` also reflects that, not just the model's randomness. It is cleanest when the stage under test is the only live one (e.g. `--live dialog`), where all inputs come from the baseline. Don't mix runs with different live stages in one group.
 - O1 word-count targets live in `LENGTH_TARGETS` in `scoring/checks.py` (inferred from the baseline; tune them freely).
