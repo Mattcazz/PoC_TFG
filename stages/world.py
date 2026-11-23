@@ -34,5 +34,5 @@ class World(Stage):
     model = "qwen3:4b"
     system_prompt = SYSTEM_PROMPT 
     user_prompt = USER_PROMPT 
-    filename = "world.txt"
+    filename = "world.json"
     schema_path = SCHEMAS_DIR / "world.schema.json"

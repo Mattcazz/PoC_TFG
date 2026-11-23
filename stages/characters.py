@@ -46,5 +46,5 @@ class Characters(Stage):
     model = "qwen3:4b"
     system_prompt = SYSTEM_PROMPT 
     user_prompt = USER_PROMPT 
-    filename = "characters.txt"
+    filename = "characters.json"
     schema_path = SCHEMAS_DIR / "characters.schema.json"

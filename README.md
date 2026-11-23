@@ -59,7 +59,7 @@ Every stage runs in one of two modes:
 
 `--live` chooses which stages are live (`world`, `characters`, `conflict`, `dialog`, a comma-separated list, or `all`, the default). All the others use their baseline. For example, `--live dialog` loads the world, characters and conflict from `baseline/` and makes a single LLM call for the dialog.
 
-The fixed artifacts are in [`baseline/`](baseline/), one file per stage: `world.txt`, `characters.txt`, `conflict.txt` and `dialog.txt`. They are JSON, matching the schemas in `schemas/`. They are shared by the whole group, so don't change them for a single experiment; agree on it first. To make a better baseline, copy a good file from `output/<run-id>/`.
+The fixed artifacts are in [`baseline/`](baseline/), one file per stage: `world.json`, `characters.json`, `conflict.json` and `dialog.json`. They match the schemas in `schemas/`. They are shared by the whole group, so don't change them for a single experiment; agree on it first. To make a better baseline, copy a good file from `output/<run-id>/`.
 
 The `idea` argument is only used by the `world` stage, so it has an effect only when `world` is live.
 
@@ -85,7 +85,7 @@ class Dialog(Stage):
     model = "qwen3:4b"
     system_prompt = SYSTEM_PROMPT
     user_prompt = USER_PROMPT          # template filled with the stage's inputs
-    filename = "dialog.txt"
+    filename = "dialog.json"
     schema_path = SCHEMAS_DIR / "dialog.schema.json"
     params = {"reasoning_effort": "none", "temperature": 0.7}
 ```
