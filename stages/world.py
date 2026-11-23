@@ -1,9 +1,34 @@
 from stages.stage import SCHEMAS_DIR, Stage
 
-SYSTEM_PROMPT = ""
-USER_PROMPT = ""
+SYSTEM_PROMPT = """
+    You are a worldbuilder writer for an RPG. "
+    "Return ONLY valid JSON (RFC 8259). "
+    "Do NOT add any text, explanation or markdown before or after the JSON. "
+    "Use double quotes only. 
+    """
+USER_PROMPT = """
+    Generate all the required elements for a credible RPG world based on the user's prompt.
+    Rules:
+        - The user's prompt has the priority. You can add more elements to the world to add credibility, to make it more interesting, etc., but the user's requirements needs to be met.
+        - The world must be coherent with itself. Don't contradict something already defined.
+        - Make it original and interesting, don't always use cliches and common tropes.
+        - Always add useful and connected information. Try to make a cohesive world with interconected elements.
 
-# TODO: fill in prompts and parameters
+
+        Return a JSON object with this structure:
+        {{
+        "narrative": "",
+        "genre": "",
+        "tone": "",
+        "rules": [""],
+        "species": [""],
+        "classes": [""],
+        "places": [
+            {{"name": "","desc": ""}}
+        ]
+        }}
+    """
+
 class World(Stage):
     name = "world"
     model = "qwen3:4b"
