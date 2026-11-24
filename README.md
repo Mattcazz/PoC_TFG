@@ -25,12 +25,12 @@ idea ─▶ world ─▶ characters ─▶ conflict ─▶ dialog
 Run everything from the project root:
 
 ```bash
-python pipeline.py "A heist in a floating city"   # every stage calls the LLM
-python pipeline.py --live dialog                  # only dialog calls the LLM
-python pipeline.py --live characters,conflict     # several live stages
-python pipeline.py --live dialog --run-id my-test # name the run (default: a random UUID)
-python pipeline.py --live dialog -n 5             # 5 runs in a row (run ids: random UUIDs)
-python pipeline.py --live dialog -n 5 --run-id exp # 5 runs: exp-1 ... exp-5
+python pipeline.py "A heist in a floating city"               # every stage calls the LLM
+python pipeline.py "A heist in a floating city" --live dialog # only dialog calls the LLM
+python pipeline.py --live characters,conflict                 # several live stages
+python pipeline.py --live dialog --run-id my-test             # name the run (default: a random UUID)
+python pipeline.py --live dialog -n 5                         # 5 runs in a row (run ids: random UUIDs)
+python pipeline.py --live dialog -n 5 --run-id exp            # 5 runs: exp-1 ... exp-5
 ```
 
 ### Running specific models
