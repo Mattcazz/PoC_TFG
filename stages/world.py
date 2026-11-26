@@ -7,15 +7,19 @@ SYSTEM_PROMPT = """
     "Use double quotes only. 
     """
 USER_PROMPT = """
-    Generate all the required elements for a credible RPG world based on the user's prompt.
+    Generate all the required elements for a credible RPG world based on the given idea.
     Rules:
-        - The user's prompt has the priority. You can add more elements to the world to add credibility, to make it more interesting, etc., but the user's requirements needs to be met.
+        - The idea (the prompt given by the user, not to be confused with this variable (USER_PROMPT) has the priority. You can add more elements to the world to add credibility, to make it more interesting, etc., but the user's requirements needs to be met.
         - The world must be coherent with itself. Don't contradict something already defined.
         - Make it original and interesting, don't always use cliches and common tropes.
         - Always add useful and connected information. Try to make a cohesive world with interconected elements.
 
 
         Return a JSON object with this structure:
+
+        Idea:
+        {idea}
+
         {{
         "narrative": "",
         "genre": "",
