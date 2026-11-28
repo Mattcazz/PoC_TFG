@@ -47,4 +47,4 @@ class Dialog(Stage):
     user_prompt = USER_PROMPT
     filename = "dialog.txt"
     schema_path = SCHEMAS_DIR / "dialog.schema.json"
-    params = {"reasoning_effort": "none", "temperature": 0.7}
+    params = {"temperature": 0.7}
